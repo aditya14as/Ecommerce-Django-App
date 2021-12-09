@@ -9,6 +9,9 @@ from django.contrib import admin
 
 class Cart(View):
     def get(self, request):
+        if not request.session.exists(request.session.session_key):
+            return redirect('homepage')
+        
         ids = list(request.session.get('cart').keys())
         products = Product.get_products_by_id(ids)
         print(products)
